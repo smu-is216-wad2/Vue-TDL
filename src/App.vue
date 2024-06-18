@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import TodoItem from "./TodoItem.vue";
 
 const input = ref("");
 const todos = ref([]);
@@ -31,11 +32,12 @@ function remove(index) {
         <!-- Renders the todo list if isShow is true -->
         <ul v-if="isShow">
             <!-- Render each todo as a list item -->
-            <li v-for="(todo, index) in todos">
-                <span>{{ todo }}</span>
-                <!-- This button will help individually remove todo items! -->
-                <button @click="remove(index)">Delete</button>
-            </li>
+            <!-- Use anonymous function for deleteFn so that it can be passed as props -->
+            <TodoItem
+                v-for="(todo, index) in todos"
+                :todo="todo"
+                :delete-fn="() => remove(index)"
+            />
         </ul>
     </div>
 </template>
